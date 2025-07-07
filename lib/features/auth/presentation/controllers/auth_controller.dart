@@ -1,4 +1,3 @@
-import 'package:app_outlet/features/auth/data/models/user_model.dart';
 import 'package:get/get.dart';
 import '../../domain/entities/user.dart';
 import '../../domain/usecases/login_usecase.dart';
@@ -44,10 +43,12 @@ class AuthController extends GetxController {
       isLoading.value = true;
       errorMessage.value = '';
 
-      //await _loginUseCase.call(username, password);
-      //final user = await _getCurrentUserUseCase.call();
+      await _loginUseCase.call(username, password);
+      final user = await _getCurrentUserUseCase.call();
 
-      currentUser.value = UserModel(
+      currentUser.value = user;
+
+      /* currentUser.value = UserModel(
         id: 10,
         email: "10@gmail.com",
         username: "Romulo",
@@ -60,7 +61,7 @@ class AuthController extends GetxController {
           number: 25,
           zipcode: "59797",
         ),
-      );
+      ); */
       isLoggedIn.value = true;
 
       Get.offAllNamed(AppRoutes.home);
