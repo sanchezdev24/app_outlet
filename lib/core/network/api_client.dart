@@ -38,4 +38,25 @@ class ApiClient {
       throw Exception('Network error: $e');
     }
   }
+
+  Future<Map<String, dynamic>> post(
+    String endpoint,
+    Map<String, dynamic> data,
+  ) async {
+    try {
+      final response = await _client.post(
+        Uri.parse('${AppConfig.apiBaseUrl}$endpoint'),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode(data),
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return json.decode(response.body);
+      } else {
+        throw Exception('Failed to post data: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Network error: $e');
+    }
+  }
 }

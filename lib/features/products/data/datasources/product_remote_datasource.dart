@@ -4,6 +4,7 @@ import '../models/product_model.dart';
 abstract class ProductRemoteDataSource {
   Future<List<ProductModel>> getProducts();
   Future<ProductModel> getProductById(int id);
+  Future<List<String>> getCategories();
 }
 
 class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
@@ -21,5 +22,11 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
   Future<ProductModel> getProductById(int id) async {
     final response = await apiClient.get('/products/$id');
     return ProductModel.fromJson(response);
+  }
+
+  @override
+  Future<List<String>> getCategories() async {
+    final response = await apiClient.getList('/products/categories');
+    return response.cast<String>();
   }
 }
